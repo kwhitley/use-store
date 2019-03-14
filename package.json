@@ -1,6 +1,6 @@
 {
   "name": "@kwhitley/use-store",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Super simple useStore() hook for React, mirroring useState() while allowing persistence",
   "keywords": [
     "react",
@@ -14,9 +14,11 @@
   "main": "index.js",
   "target": "esnext",
   "scripts": {
-    "release:major": "release --major",
-    "release:minor": "release --minor",
-    "release:patch": "release --patch"
+    "prebuild": "rm -rf build",
+    "build": "babel src --ignore '**/*.spec.js' --out-dir build -d",
+    "release:major": "yarn build && release --major --src=build",
+    "release:minor": "yarn build && release --minor --src=build",
+    "release:patch": "yarn build && release --patch --src=build"
   },
   "author": "Kevin R. Whitley <krwhitley@gmail.com>",
   "license": "MIT",
@@ -29,6 +31,11 @@
     "email": "support@arundo.com"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+    "@babel/preset-env": "^7.0.0",
     "@kwhitley/yarn-release": "^1.1.0"
   },
   "peerDependencies": {
