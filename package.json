@@ -11,7 +11,7 @@
     "localStorage",
     "persist"
   ],
-  "main": "dist/index.js",
+  "main": "index.js",
   "target": "esnext",
   "scripts": {
     "release:major": "release --major",
