@@ -1,0 +1,37 @@
+{
+  "name": "@kwhitley/use-store",
+  "version": "0.0.2",
+  "description": "Super simple useStore() hook for React, mirroring useState() while allowing persistence",
+  "keywords": [
+    "react",
+    "hooks",
+    "store",
+    "useState",
+    "useStore",
+    "localStorage",
+    "persist"
+  ],
+  "main": "dist/index.js",
+  "target": "esnext",
+  "scripts": {
+    "release:major": "release --major",
+    "release:minor": "release --minor",
+    "release:patch": "release --patch"
+  },
+  "author": "Kevin R. Whitley <krwhitley@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kwhitley/use-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kwhitley/use-store/issues",
+    "email": "support@arundo.com"
+  },
+  "devDependencies": {
+    "@kwhitley/yarn-release": "^1.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  }
+}
