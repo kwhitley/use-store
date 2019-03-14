@@ -3,44 +3,43 @@ Super simple useStore() hook for React, mirroring useState() while allowing pers
 
 # Why?
 Even with the advent of React hooks, cross-component shared state
-is still being solved with either context/provider hooks, or traditional
-stores like redux/mobx.  This store [nearly] mirrors the signature of
-the elegant `useState()` hook, without awkward redux/reducer patterns.
+is still being solved with either context/provider hooks (messy), or traditional
+stores like redux/mobx (messier).  This store more or less mirrors the signature of
+the incredibly elegant `useState()` hook, with optional local persistence built-in.
 
 # Installation
 ```
 yarn add -D @kwhitley/use-store
 ```
 
-# Syntax
-```
-// let [ value, setValue ] = useStore(namespace, [initialValue=undefined], [options={}])
+# API
+### useStore(namespace, [initialValue=undefined], [options={}])
+returns `[ value, setValue ]` pair, identical to `useState()` in React
+```js
+import { useStore } from '@kwhitley/use-store'
 
-Example 1:
-let [ value, setValue ] = useStore('age', 99)
-// value = 99
-setValue(20)
-// value = 20
-
-Example 2:
-let [ value, setValue ] = useStore('loggedIn', false, { persist: true })
-// value = false
-setValue(true)
-// value = true, even after refreshing app
+// must be called inside a React component
+let [ value, setValue ] = useStore('foo')
+// value = undefined
+setValue(3)
+// value = 3
 ```
 
-#### Arguments
-- `namespace` (string, **required**) -  required, this is the reference you'll share throughout the app for a specific value.  E.g. `useStore('myValue')`
-- `initialValue (anything, optional) - optional default value which will be set by the first component that encounters this hook on a given namespace.  This will be ignored if persist is enabled and value found locally.
-- `options` (object, optional) - additonal options for the hook
+###### Arguments
+- `namespace` (string) **required** - this is the reference you'll share throughout the app for a specific value.  E.g. `useStore('myValue')`
+- `initialValue` (anything) **optional** - optional default value which will be set by the first component that encounters this hook on a given namespace.  This will be ignored if persist is enabled and value found locally.
+- `options` (object) **optional** - options for the hook (see below):
+  - `persist` (boolean, default=false)
 
-###### Options
-- `persist` (boolean, default=false)
+### globalStore.set(namespace, initialValue, options) // params identical to `useStore()` above
+For manually setting initial values and persist options so individual components don't have to (also to solve race conditions)
+```js
+import { globalStore } from '@kwhitley/use-store'
 
-##### Returns
-`[ value, setValue ]` returns a signature identical to `useState()`, namely an array pair of the value itself and its setter function.
+globalStore.set('foo', 'bar', { persist: true })
+```
 
-# Usage
+# Example (Elaborate)
 ```js
   // ComponentA.js
 
