@@ -41,7 +41,7 @@ setValue(true)
 `[ value, setValue ]` returns a signature identical to `useState()`, namely an array pair of the value itself and its setter function.
 
 # Usage
-```
+```js
   // ComponentA.js
 
   import React from 'react'
@@ -60,7 +60,7 @@ setValue(true)
   }
 ```
 
-```
+```js
   // ComponentB.js
 
   import React from 'react'
