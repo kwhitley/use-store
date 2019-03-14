@@ -31,7 +31,7 @@ export class Store {
     this.state = value
     if (this.persist) {
       // console.log('should persist value', value, 'to namespace', GLOBALSTORAGE_PREFIX + namespace)
-      localStorage.setItem(GLOBALSTORAGE_PREFIX + namespace, JSON.stringify(value))
+      localStorage.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
     }
     this.setters.forEach(setter => setter(this.state))
   }
