@@ -629,10 +629,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@kwhitley/yarn-release@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@kwhitley/yarn-release/-/yarn-release-1.3.1.tgz#3de878460505d32512729db96934563bf7dbcd3b"
-  integrity sha512-2P5Dr1IgZne+kvcW25L7mai6hO8OnKOac0EhpUQYu/baNrVp/bcfnF8NOvPqrqcIXVPzVz/tXKTqAnPQDNFupQ==
+"@kwhitley/yarn-release@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@kwhitley/yarn-release/-/yarn-release-1.3.2.tgz#4e0b51d01bc5c753d738e5011778472f4db80fac"
+  integrity sha512-cdQq82f7BpFajnKwp5KQWdhdeKfmOLYWWoiYl1ZPsu6G89SAKSqTJlJdivu1XqeKLTdZXYUWTpliSuT8UO1utg==
   dependencies:
     app-root-path "^2.1.0"
     bluebird "^3.5.3"
