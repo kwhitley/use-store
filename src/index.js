@@ -56,7 +56,7 @@ export class GlobalStore {
 }
 
 // shared instantiation of GlobalStore
-export const globalStore = window.globalStore = new GlobalStore()
+export const globalStore = new GlobalStore()
 
 // the actual hook
 export function useStore(namespace, value, options = {}) {
