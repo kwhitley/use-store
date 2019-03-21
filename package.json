@@ -1,6 +1,6 @@
 {
   "name": "@kwhitley/use-store",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Super simple useStore() hook for React, mirroring useState() while allowing persistence",
   "keywords": [
     "react",
