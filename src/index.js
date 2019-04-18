@@ -1,37 +1,38 @@
 import { useState, useEffect } from 'react'
+import localforage from 'localforage'
 
-// prefix for localStorage
+// prefix for localforage
 const GLOBALSTORAGE_PREFIX = 'globalstore:'
 
 // individual Store implementation for tracking values/setters
 export class Store {
-  constructor({ value, namespace, persist }) {
+  constructor({ value, namespace, options }) {
     this.state = value
 
-    if (persist) {
+    if (options.persist) {
       try {
-        let stored = localStorage.getItem(GLOBALSTORAGE_PREFIX + namespace)
-
+        let stored = localforage.getItem(GLOBALSTORAGE_PREFIX + namespace)
         if (stored !== null) {
-          // console.log(GLOBALSTORAGE_PREFIX + namespace, 'found in localStorage, setting to', this.state)
+          // console.log(GLOBALSTORAGE_PREFIX + namespace, 'found in localforage, setting to', this.state)
           this.state = JSON.parse(stored)
         } else {
-          // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localStorage, setting to', this.state)
+          // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localforage, setting to', this.state)
         }
       } catch(err) {
-        // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localStorage, setting to', this.state)
+        // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localforage, setting to', this.state)
       }
     }
+
+    this.options = options
     this.namespace = namespace
-    this.persist = persist
     this.setters = []
   }
 
   setState = (value) => {
     this.state = value
-    if (this.persist) {
-      // console.log('should persist value', value, 'to namespace', GLOBALSTORAGE_PREFIX + namespace)
-      localStorage.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
+    if (this.options.persist) {
+      // console.log('should persist value', value, 'to namespace', GLOBALSTORAGE_PREFIX + this.namespace)
+      localforage.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
     }
     this.setters.forEach(setter => setter(this.state))
   }
@@ -40,16 +41,15 @@ export class Store {
 // namespaced index of requested Stores
 export class GlobalStore {
   set = (namespace, value, options = {}) => {
-    let { persist } = options
     if (this.hasOwnProperty(namespace)) {
       this[namespace].setState(value)
     } else {
-      this[namespace] = new Store({ value, persist, namespace })
+      this[namespace] = new Store({ value, options, namespace })
     }
   }
 
   clear = (namespace) => {
-    localStorage.removeItem(GLOBALSTORAGE_PREFIX + namespace)
+    localforage.removeItem(GLOBALSTORAGE_PREFIX + namespace)
   }
 
   persist = (...args) => this.set(...args, { persist: true })
@@ -61,12 +61,15 @@ export const globalStore = new GlobalStore()
 // the actual hook
 export function useStore(namespace, value, options = {}) {
   let whichStore = undefined
-  let { persist } = options
+
+  if (!namespace) {
+    throw new Error('no namespace provided to useStore... try using useState() instead?')
+  }
 
   if (globalStore.hasOwnProperty(namespace)) {
     whichStore = globalStore[namespace]
   } else {
-    whichStore = globalStore[namespace] = new Store({ value, persist, namespace })
+    whichStore = globalStore[namespace] = new Store({ value, options, namespace })
   }
 
   const [ state, set ] = useState(whichStore.state)
