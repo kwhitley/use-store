@@ -1,6 +1,6 @@
-import { renderHook, cleanup, act } from 'react-hooks-testing-library'
-import 'react-hooks-testing-library/cleanup-after-each'
-import localforage from 'localforage'
+import { renderHook, cleanup, act, unmount } from 'react-hooks-testing-library'
+
+afterEach(cleanup)
 
 // test files
 import { useStore } from '../src/index.js'
@@ -36,14 +36,6 @@ describe('@kwhitley/use-store', () => {
 
     test('hook is shared across functional scopes', () => {
       const { result } = renderHook(() => useStore('test1', 1)) // initialize to 1
-
-      expect(result.current[VALUE]).toBe(2) // but expect 2 from previous test
-    })
-
-    test('honors { persist: true } flag', () => {
-      const { result } = renderHook(() => useStore('test2', 1, { persist: true })) // initialize to 1
-
-      act(() => result.current[SETTER](result.current[VALUE] + 1))
 
       expect(result.current[VALUE]).toBe(2) // but expect 2 from previous test
     })

@@ -1,7 +1,7 @@
 {
   "name": "@kwhitley/use-store",
-  "version": "1.1.0",
-  "description": "Super simple useStore() hook for React, mirroring useState() while allowing persistence",
+  "version": "1.1.1",
+  "description": "Cross-component, persistable useState() effect, without context",
   "keywords": [
     "react",
     "hooks",
@@ -45,8 +45,5 @@
   },
   "peerDependencies": {
     "react": "^16.8.0"
-  },
-  "dependencies": {
-    "localforage": "^1.7.3"
   }
 }
