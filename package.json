@@ -1,6 +1,6 @@
 {
   "name": "@kwhitley/use-store",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Cross-component, persistable useState() effect, without context",
   "keywords": [
     "react",
@@ -47,6 +47,6 @@
     "react": "^16.8.0"
   },
   "dependencies": {
-    "@kwhitley/localstorify": "^0.1.4"
+    "@kwhitley/localstorify": "^0.1.5"
   }
 }
