@@ -1,4 +1,4 @@
-Super simple useStore() hook for React, mirroring useState() while allowing persistence
+Cross-component, persistable useState() effect, without context
 ===
 
 # Why?

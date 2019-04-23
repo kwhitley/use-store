@@ -39,5 +39,11 @@ describe('@kwhitley/use-store', () => {
 
       expect(result.current[VALUE]).toBe(2) // but expect 2 from previous test
     })
+
+    test('using persist: true does not break', () => {
+      const { result } = renderHook(() => useStore('test2', 1, { persist: true })) // initialize to 1
+
+      expect(result.current[VALUE]).toBe(1) // but expect 2 from previous test
+    })
   })
 })
