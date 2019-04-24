@@ -905,10 +905,10 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
-"@kwhitley/localstorify@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@kwhitley/localstorify/-/localstorify-0.1.6.tgz#4b749f4ab160053f26d1977305849a52f94a5c17"
-  integrity sha512-7cGpHzfbkAZWP591DXazEoPzgHapJVkexxd6yZrzshwLDA8JtSLTXq4GxmDl2HnXm76UP8CJiLevnroIWQnSyQ==
+"@kwhitley/localstorify@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@kwhitley/localstorify/-/localstorify-0.2.0.tgz#e0b9c702d3f009de2f8f21d9432300399cb7045b"
+  integrity sha512-eomO0UBuJHpRW2RrvWSPu4KhNEEIPIjsjErW8ojWEQFZnBmCXp9XVcg6UORWUwNvhz3wv4FIj7zfztPr9JUwKw==
 
 "@kwhitley/yarn-release@^1.4.0":
   version "1.4.0"
