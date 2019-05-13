@@ -1,6 +1,6 @@
 {
   "name": "react-use-store",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
     "build": "babel src --ignore '**/*.spec.js' --out-dir build -d",
     "test": "jest",
     "prerelease": "yarn test",
-    "release": "yarn build && release --src=build --push",
+    "release": "yarn build && release --src=build --push --public",
     "release:major": "yarn release - --major",
     "release:minor": "yarn release - --minor",
     "release:patch": "yarn release - --patch"
