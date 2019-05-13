@@ -1,7 +1,7 @@
 {
-  "name": "@kwhitley/use-store",
-  "version": "1.2.6",
-  "description": "Cross-component, persistable useState() effect, without context",
+  "name": "react-use-store",
+  "version": "1.2.7",
+  "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
     "hooks",
@@ -14,12 +14,14 @@
   "main": "index.js",
   "target": "esnext",
   "scripts": {
-    "prebuild": "rm -rf build",
+    "prebuild": "rm -rf build && yarn test",
     "build": "babel src --ignore '**/*.spec.js' --out-dir build -d",
-    "test": "jest --watch",
-    "release:major": "yarn build && release --major --src=build --push",
-    "release:minor": "yarn build && release --minor --src=build --push",
-    "release:patch": "yarn build && release --patch --src=build --push"
+    "test": "jest",
+    "prerelease": "yarn test",
+    "release": "yarn build && release --src=build --push",
+    "release:major": "yarn release - --major",
+    "release:minor": "yarn release - --minor",
+    "release:patch": "yarn release - --patch"
   },
   "author": "Kevin R. Whitley <krwhitley@gmail.com>",
   "license": "MIT",
@@ -32,21 +34,22 @@
     "email": "support@arundo.com"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@kwhitley/yarn-release": "^1.4.0",
-    "jest": "^24.7.1",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hooks-testing-library": "^0.4.1"
+    "react-hooks-testing-library": "^0.5.0",
+    "react-test-renderer": "^16.8.6",
+    "yarn-release": "^1.9.2"
   },
   "peerDependencies": {
     "react": "^16.8.0"
   },
   "dependencies": {
-    "@kwhitley/localstorify": "^0.2.0"
+    "localstorify": "^0.2.1"
   }
 }

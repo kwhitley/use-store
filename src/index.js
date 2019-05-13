@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import localstorify from '@kwhitley/localstorify'
+import localstorify from 'localstorify'
 
 // prefix for localstorify
-const GLOBALSTORAGE_PREFIX = '[@kwhitley/use-store]'
+const GLOBALSTORAGE_PREFIX = '!rus::'
 
 // individual Store implementation for tracking values/setters
 export class Store {

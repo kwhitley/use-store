@@ -1,7 +1,5 @@
 import { renderHook, cleanup, act, unmount } from 'react-hooks-testing-library'
 
-afterEach(cleanup)
-
 // test files
 import { useStore } from '../src/index.js'
 
