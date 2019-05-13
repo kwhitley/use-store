@@ -9,14 +9,14 @@ the incredibly elegant `useState()` hook, with optional local persistence built-
 
 # Installation
 ```
-yarn add -D @kwhitley/use-store
+yarn add use-store-hook
 ```
 
 # API
 ### useStore(namespace, [initialValue=undefined], [options={}])
 returns `[ value, setValue ]` pair, identical to `useState()` in React
 ```js
-import { useStore } from '@kwhitley/use-store'
+import { useStore } from 'use-store-hook'
 
 // must be called inside a React component
 let [ value, setValue ] = useStore('foo')
@@ -34,7 +34,7 @@ setValue(3)
 ### globalStore.set(namespace, initialValue, options) // params identical to `useStore()` above
 For manually setting initial values and persist options so individual components don't have to (also to solve race conditions)
 ```js
-import { globalStore } from '@kwhitley/use-store'
+import { globalStore } from 'use-store-hook'
 
 globalStore.set('foo', 'bar', { persist: true })
 ```
@@ -44,7 +44,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentA.js
 
   import React from 'react'
-  import { useStore } from '@kwhitley/use-store'
+  import { useStore } from 'use-store-hook'
 
   export default function ComponentA() {
     let [ value, setValue ] = useStore('myValue', 3)
@@ -63,7 +63,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentB.js
 
   import React from 'react'
-  import { useStore } from '@kwhitley/use-store'
+  import { useStore } from 'use-store-hook'
   import ComponentA from './ComponentA'
 
   export default function ComponentB() {
