@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
-import localstorify from 'localstorify'
+import localforage from 'localforage'
+
+if (window !== undefined) {
+  window.localforage = localforage
+}
 
 // prefix for localstorify
 const GLOBALSTORAGE_PREFIX = '!rus::'
@@ -10,29 +14,32 @@ export class Store {
     this.state = value
 
     if (options.persist) {
-      try {
-        let stored = localstorify.getItem(GLOBALSTORAGE_PREFIX + namespace)
-        if (stored !== null) {
-          // console.log(GLOBALSTORAGE_PREFIX + namespace, 'found in localstorify, setting to', this.state)
-          this.state = JSON.parse(stored)
-        } else {
-          // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localstorify, setting to', this.state)
-        }
-      } catch(err) {
-        // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localstorify, setting to', this.state)
-      }
+      localforage
+        .getItem(GLOBALSTORAGE_PREFIX + namespace)
+        .then(storedValue => {
+          if (storedValue !== this.state) {
+            this.setState(storedValue)
+          }
+        })
+        .catch(console.warn)
     }
 
     this.options = options
     this.namespace = namespace
     this.setters = []
+    this.error = undefined
   }
 
   setState = (value) => {
-    this.state = value
     if (this.options.persist) {
-      // console.log('should persist value', value, 'to namespace', GLOBALSTORAGE_PREFIX + this.namespace)
-      localstorify.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
+      localforage
+        .setItem(GLOBALSTORAGE_PREFIX + this.namespace, value)
+        .then(storedValue => {
+          this.state = storedValue
+        })
+        .catch(err => this.error = err)
+    } else {
+      this.state = value
     }
     this.setters.forEach(setter => setter(this.state))
   }
@@ -48,9 +55,7 @@ export class GlobalStore {
     }
   }
 
-  clear = (namespace) => {
-    localstorify.removeItem(GLOBALSTORAGE_PREFIX + namespace)
-  }
+  clear = (namespace) => localforage.removeItem(GLOBALSTORAGE_PREFIX + namespace)
 
   persist = (...args) => this.set(...args, { persist: true })
 }
@@ -82,5 +87,5 @@ export function useStore(namespace, value, options = {}) {
     whichStore.setters = whichStore.setters.filter(setter => setter !== set)
   }, [])
 
-  return [ state, whichStore.setState ]
+  return [ state, whichStore.setState, whichStore.error ]
 }

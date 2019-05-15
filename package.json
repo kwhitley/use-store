@@ -1,6 +1,6 @@
 {
   "name": "use-store-hook",
-  "version": "1.2.9",
+  "version": "1.2.9-localforage.0",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -17,7 +17,6 @@
     "prebuild": "rm -rf build && yarn test",
     "build": "babel src --ignore '**/*.spec.js' --out-dir build -d",
     "test": "jest",
-    "prerelease": "yarn test",
     "release": "yarn build && release --src=build --push --public",
     "release:major": "yarn release - --major",
     "release:minor": "yarn release - --minor",
@@ -50,6 +49,7 @@
     "react": "^16.8.0"
   },
   "dependencies": {
+    "localforage": "^1.7.3",
     "localstorify": "^0.2.1"
   }
 }
