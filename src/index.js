@@ -6,7 +6,7 @@ if (window !== undefined) {
 }
 
 // prefix for localstorify
-const GLOBALSTORAGE_PREFIX = '!rus::'
+const GLOBALSTORAGE_PREFIX = '!ush:'
 
 // individual Store implementation for tracking values/setters
 export class Store {
@@ -14,12 +14,12 @@ export class Store {
     this.state = value
 
     if (options.persist) {
-      console.log('retrieving', GLOBALSTORAGE_PREFIX + namespace, 'from localforage')
+      // console.log('retrieving', GLOBALSTORAGE_PREFIX + namespace, 'from localforage')
       localforage
         .getItem(GLOBALSTORAGE_PREFIX + namespace)
         .then(storedValue => {
-          console.log('setting value for', namespace, 'to', storedValue, 'from localforage')
-          if (storedValue !== this.state) {
+          // console.log('setting value for', namespace, 'to', storedValue, 'from localforage')
+          if (storedValue !== null && storedValue !== this.state) {
             this.setState(storedValue, { skipWrite: true })
           }
         })
@@ -33,17 +33,23 @@ export class Store {
   }
 
   setState = (value, options = {}) => {
+    // console.log('setState', { value, options })
     if (this.options.persist && !options.skipWrite) {
+      // console.log('writing value', value, 'to', GLOBALSTORAGE_PREFIX + this.namespace, 'in localforage')
       localforage
         .setItem(GLOBALSTORAGE_PREFIX + this.namespace, value)
         .then(storedValue => {
+          // console.log('this (store)...', this)
+          // console.log('saved value for', this.namespace, 'to', storedValue, 'in localforage')
           this.state = storedValue
+          this.setters.forEach(setter => setter(this.state))
         })
-        .catch(err => this.error = err)
+        .catch(console.warn)
     } else {
+      // console.log('writing non-persisted value', value, 'to', this.namespace)
       this.state = value
+      this.setters.forEach(setter => setter(this.state))
     }
-    this.setters.forEach(setter => setter(this.state))
   }
 }
 

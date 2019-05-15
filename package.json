@@ -49,7 +49,6 @@
     "react": "^16.8.0"
   },
   "dependencies": {
-    "localforage": "^1.7.3",
-    "localstorify": "^0.2.1"
+    "localforage": "^1.7.3"
   }
 }
