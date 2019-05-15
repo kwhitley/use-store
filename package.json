@@ -1,6 +1,6 @@
 {
   "name": "use-store-hook",
-  "version": "1.2.9",
+  "version": "1.4.0",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -50,6 +50,6 @@
     "react": "^16.8.0"
   },
   "dependencies": {
-    "localstorify": "^0.2.1"
+    "localstorify": "^0.2.2"
   }
 }

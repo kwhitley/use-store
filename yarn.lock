@@ -3622,10 +3622,10 @@ load-json-file@^4.0.0:
     pify "^3.0.0"
     strip-bom "^3.0.0"
 
-localstorify@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/localstorify/-/localstorify-0.2.1.tgz#2a72961dd2a34f9b483870004e836e2f522ac68f"
-  integrity sha512-8VsI8sLCIxSmtFmU0+UxO7zVSwdO4g+Gx6JM7+5YuQYPvMv/g2YFFnhAnyM0mmLa37ir19k9wg/IyWchZB8Lyw==
+localstorify@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/localstorify/-/localstorify-0.2.2.tgz#32aa3ca23572f25ef1c31bdcc1db1d58cdf21141"
+  integrity sha512-EvoT3iU/KzW5kZPrMEgjvu55/VmSUW3Q+Ud5SjZRRvuPyUeYdr5lMWVToVmbkd+6k7zFjkJbnZ7CYOtrU7leaQ==
 
 locate-path@^2.0.0:
   version "2.0.0"

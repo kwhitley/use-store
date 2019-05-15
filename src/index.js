@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import localstorify from 'localstorify'
 
 // prefix for localstorify
-const GLOBALSTORAGE_PREFIX = '!rus::'
+const GLOBALSTORAGE_PREFIX = '!ush::'
 
 // individual Store implementation for tracking values/setters
 export class Store {
@@ -13,13 +13,10 @@ export class Store {
       try {
         let stored = localstorify.getItem(GLOBALSTORAGE_PREFIX + namespace)
         if (stored !== null) {
-          // console.log(GLOBALSTORAGE_PREFIX + namespace, 'found in localstorify, setting to', this.state)
           this.state = JSON.parse(stored)
-        } else {
-          // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localstorify, setting to', this.state)
         }
       } catch(err) {
-        // console.warn(GLOBALSTORAGE_PREFIX + namespace, 'not found in localstorify, setting to', this.state)
+
       }
     }
 
@@ -31,7 +28,6 @@ export class Store {
   setState = (value) => {
     this.state = value
     if (this.options.persist) {
-      // console.log('should persist value', value, 'to namespace', GLOBALSTORAGE_PREFIX + this.namespace)
       localstorify.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
     }
     this.setters.forEach(setter => setter(this.state))
