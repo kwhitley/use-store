@@ -14,11 +14,13 @@ export class Store {
     this.state = value
 
     if (options.persist) {
+      console.log('retrieving', GLOBALSTORAGE_PREFIX + namespace, 'from localforage')
       localforage
         .getItem(GLOBALSTORAGE_PREFIX + namespace)
         .then(storedValue => {
+          console.log('setting value for', namespace, 'to', storedValue, 'from localforage')
           if (storedValue !== this.state) {
-            this.setState(storedValue)
+            this.setState(storedValue, { skipWrite: true })
           }
         })
         .catch(console.warn)
@@ -30,8 +32,8 @@ export class Store {
     this.error = undefined
   }
 
-  setState = (value) => {
-    if (this.options.persist) {
+  setState = (value, options = {}) => {
+    if (this.options.persist && !options.skipWrite) {
       localforage
         .setItem(GLOBALSTORAGE_PREFIX + this.namespace, value)
         .then(storedValue => {
