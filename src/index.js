@@ -70,7 +70,7 @@ export function useStore(namespace, value, options = {}) {
 
   const [ state, set ] = useState(whichStore.state)
 
-  if (!whichStore.setters.includes(set)) {
+  if (whichStore.setters.indexOf(set) === -1) {
     whichStore.setters.push(set)
   }
 

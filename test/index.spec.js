@@ -1,4 +1,4 @@
-import { renderHook, cleanup, act, unmount } from 'react-hooks-testing-library'
+import { renderHook, cleanup, act, unmount } from '@testing-library/react-hooks'
 
 // test files
 import { useStore } from '../src/index.js'

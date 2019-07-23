@@ -1,6 +1,6 @@
 {
   "name": "use-store-hook",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
     "build": "babel src --ignore '**/*.spec.js' --out-dir build -d",
     "test": "jest",
     "prerelease": "yarn test",
-    "release": "yarn build && release --src=build --push --public",
+    "release": "yarn build && release --src=build --push --public --tag",
     "release:major": "yarn release - --major",
     "release:minor": "yarn release - --minor",
     "release:patch": "yarn release - --patch"
@@ -34,17 +34,17 @@
     "email": "support@arundo.com"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.5.0",
+    "@babel/preset-env": "^7.5.5",
+    "@testing-library/react-hooks": "^1.1.0",
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hooks-testing-library": "^0.5.0",
     "react-test-renderer": "^16.8.6",
-    "yarn-release": "^1.9.2"
+    "yarn-release": "^1.10.2"
   },
   "peerDependencies": {
     "react": "^16.8.0"
