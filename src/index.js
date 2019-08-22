@@ -78,5 +78,11 @@ export function useStore(namespace, value, options = {}) {
     whichStore.setters = whichStore.setters.filter(setter => setter !== set)
   }, [])
 
-  return [ state, whichStore.setState ]
+  const magicSetter = (setter) => (e) => {
+    e instanceof Event && e.target
+    ? setter(e.target.value)
+    : setter(e)
+  }
+
+  return [ state, magicSetter(whichStore.setState) ]
 }
