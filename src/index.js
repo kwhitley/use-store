@@ -79,7 +79,7 @@ export function useStore(namespace, value, options = {}) {
   }, [])
 
   const magicSetter = (setter) => (e) => {
-    e instanceof Event && e.target
+    typeof e === 'object' && (e.nativeEvent || e.constructor.name === 'SyntheticEvent') && e.target
     ? setter(e.target.value)
     : setter(e)
   }
