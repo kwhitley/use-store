@@ -33,7 +33,7 @@ export class Store {
 
     if (options.broadcast && window.BroadcastChannel) {
       this.channel = new BroadcastChannel(GLOBALSTORAGE_PREFIX + namespace)
-      this.channel.addEventListener('message', debounce(this.handleMessage, 300))
+      this.channel.addEventListener('message', this.handleMessage)
     }
 
     this.options = options
@@ -41,12 +41,12 @@ export class Store {
     this.setters = []
   }
 
-  handleMessage = (e) => {
+  handleMessage = debounce((e) => {
     if (!e.data || e.data.id === this.id) {
       return
     }
     this.setState(e.data.message, { broadcast: false })
-  }
+  }, 300)
 
   setState = (value, options = { broadcast: true }) => {
     this.state = value
@@ -54,7 +54,7 @@ export class Store {
       localstorify.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
     }
     this.setters.forEach(setter => setter(this.state))
-    if (options.broadcast) {
+    if (options.broadcast && this.options.broadcast) {
       this.channel.postMessage({ id: this.id, message: value })
     }
   }

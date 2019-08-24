@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, wait } from '@testing-library/react'
 import { renderHook, cleanup, act, unmount } from '@testing-library/react-hooks'
 
 // test files
@@ -106,7 +106,7 @@ describe('@kwhitley/use-store', () => {
       let options = {
         broadcast: true
       }
-      const initailValue = 'test1'
+      let initialValue = 'test1'
 
       test('using broadcast: true instantiates a BroadcastChannel', () => {
         const store = new Store({
@@ -121,28 +121,33 @@ describe('@kwhitley/use-store', () => {
       })
 
       test('setting a new value broadcasts a message', () => {
-        const { result } = renderHook(() => useStore('test-broadcast', initailValue, options))
+        const { result, unmount } = renderHook(() => useStore('test-broadcast', initialValue, options))
         const testStore = globalStore['test-broadcast']
-
+        const expectedMessage = {
+          id: testStore.id,
+          message: 'test2'
+        }
         act(() => {
           const [, setValue] = result.current;
           setValue('test2')
         })
 
-        expect(testStore.channel.postMessage).toHaveBeenCalledWith('test2')
+        expect(testStore.channel.postMessage).toHaveBeenCalledWith(expect.objectContaining(expectedMessage))
+        unmount()
       })
 
       test('receiving a message invokes handleMessage', async () => {
-        const { result } = renderHook(() => useStore('test-broadcast', initailValue, options))
+        const { unmount } = renderHook(() => useStore('test-broadcast', initialValue, options))
         const testStore = globalStore['test-broadcast']
-        act(() => {
-          testStore.channel.postMessage('test3')
-        })
-        const [value] = result.current
-        expect(value).toEqual('test3')
+        const messageData = { id: Math.random(), message: 'test3' }
+        const expectedEvent = { data: messageData }
+
+        testStore.channel.postMessage(messageData)
         testStore.channel.listeners['message'].forEach(listener => {
-          expect(listener).toHaveBeenCalledWith(expect.objectContaining({ data: 'test3' }))
+          expect(listener).toHaveBeenCalledWith(expect.objectContaining(expectedEvent))
         })
+        
+        unmount()
       })
     })
   })
