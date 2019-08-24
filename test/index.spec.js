@@ -102,7 +102,7 @@ describe('@kwhitley/use-store', () => {
       })
     })
 
-    describe('broadcast behavior (cross-tab synchronization using BroadcastChannel', () => {
+    describe('broadcast behavior (cross-tab synchronization using BroadcastChannel)', () => {
       let options = {
         broadcast: true
       }
