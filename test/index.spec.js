@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import { renderHook, cleanup, act, unmount } from '@testing-library/react-hooks'
 
 // test files
-import { useStore } from '../src/index.js'
+import { Store, globalStore, useStore } from '../src/index.js'
 
 const VALUE = 0
 const SETTER = 1
@@ -14,6 +14,30 @@ const createInput = ([ value, onChange ]) => {
 
   return input
 }
+
+class BroadcastChannel {
+  constructor(channel) {
+    this.channel = channel
+    this.listeners = {}
+  }
+
+  addEventListener = jest.fn().mockImplementation((event, listener) => {
+    const existingListeners = this.listeners[event] || []
+    const mockListener = jest.fn().mockImplementation(listener)
+    this.listeners[event] = [...existingListeners, mockListener]
+  })
+
+  postMessage = jest.fn().mockImplementation(message => {
+    if (!this.listeners.message) {
+      return
+    }
+    this.listeners.message.forEach(listener => {
+      listener({ data: message })
+    })
+  })
+}
+
+window.BroadcastChannel = BroadcastChannel
 
 describe('@kwhitley/use-store', () => {
   describe('useStore(namespace:string, initialValue:anything, options:object) : function', () => {
@@ -75,6 +99,50 @@ describe('@kwhitley/use-store', () => {
         })
 
         expect(result.current[VALUE]).toBe(fakeEvent)
+      })
+    })
+
+    describe('broadcast behavior (cross-tab synchronization using BroadcastChannel', () => {
+      let options = {
+        broadcast: true
+      }
+      const initailValue = 'test1'
+
+      test('using broadcast: true instantiates a BroadcastChannel', () => {
+        const store = new Store({
+          value: 'test broadcast',
+          options: {
+            broadcast: true
+          },
+          namespace: 'test-broadcast-instance'
+        })
+        expect(store.channel).toBeInstanceOf(BroadcastChannel)
+        expect(store.channel.addEventListener).toHaveBeenCalledWith('message', store.handleMessage)
+      })
+
+      test('setting a new value broadcasts a message', () => {
+        const { result } = renderHook(() => useStore('test-broadcast', initailValue, options))
+        const testStore = globalStore['test-broadcast']
+
+        act(() => {
+          const [, setValue] = result.current;
+          setValue('test2')
+        })
+
+        expect(testStore.channel.postMessage).toHaveBeenCalledWith('test2')
+      })
+
+      test('receiving a message invokes handleMessage', async () => {
+        const { result } = renderHook(() => useStore('test-broadcast', initailValue, options))
+        const testStore = globalStore['test-broadcast']
+        act(() => {
+          testStore.channel.postMessage('test3')
+        })
+        const [value] = result.current
+        expect(value).toEqual('test3')
+        testStore.channel.listeners['message'].forEach(listener => {
+          expect(listener).toHaveBeenCalledWith(expect.objectContaining({ data: 'test3' }))
+        })
       })
     })
   })

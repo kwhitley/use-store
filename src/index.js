@@ -20,15 +20,30 @@ export class Store {
       }
     }
 
+    if (options.broadcast && window.BroadcastChannel) {
+      this.channel = new BroadcastChannel(GLOBALSTORAGE_PREFIX + namespace)
+      this.channel.addEventListener('message', this.handleMessage)
+    }
+
     this.options = options
     this.namespace = namespace
     this.setters = []
+  }
+
+  handleMessage = (e) => {
+    if (!e.data || e.data === this.state) {
+      return
+    }
+    this.setState(e.data)
   }
 
   setState = (value) => {
     this.state = value
     if (this.options.persist) {
       localstorify.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
+    }
+    if (this.options.broadcast && this.channel) {
+      this.channel.postMessage(value)
     }
     this.setters.forEach(setter => setter(this.state))
   }
