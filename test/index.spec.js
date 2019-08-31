@@ -127,12 +127,14 @@ describe('@kwhitley/use-store', () => {
           id: testStore.id,
           message: 'test2'
         }
+        
         act(() => {
           const [, setValue] = result.current;
           setValue('test2')
         })
 
         expect(testStore.channel.postMessage).toHaveBeenCalledWith(expect.objectContaining(expectedMessage))
+
         unmount()
       })
 
@@ -143,6 +145,7 @@ describe('@kwhitley/use-store', () => {
         const expectedEvent = { data: messageData }
 
         testStore.channel.postMessage(messageData)
+
         testStore.channel.listeners['message'].forEach(listener => {
           expect(listener).toHaveBeenCalledWith(expect.objectContaining(expectedEvent))
         })
