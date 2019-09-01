@@ -1,6 +1,6 @@
 {
   "name": "use-store-hook",
-  "version": "1.5.3",
+  "version": "1.5.3-tag.0",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -22,7 +22,8 @@
     "release": "yarn build && release --src=build --push --public --tag",
     "release:major": "yarn release - --major",
     "release:minor": "yarn release - --minor",
-    "release:patch": "yarn release - --patch"
+    "release:patch": "yarn release - --patch",
+    "release:next": "yarn release - --type=tag"
   },
   "author": "Kevin R. Whitley <krwhitley@gmail.com>",
   "license": "MIT",
