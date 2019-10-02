@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
-import localstorify from 'localstorify'
 
-// prefix for localstorify
+// prefix for localStorage
 const GLOBALSTORAGE_PREFIX = '!ush::'
 
-const debounce = (func, delay = 100) => { 
-  let timer 
-  return function() { 
+const debounce = (func, delay = 100) => {
+  let timer
+  return function() {
     const context = this
-    const args = arguments 
-    clearTimeout(timer) 
-    timer = setTimeout(() => func.apply(context, args), delay) 
-  } 
-} 
+    const args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(() => func.apply(context, args), delay)
+  }
+}
 
 // https://stackoverflow.com/a/2117523/11599918
 const uuid = () => {
@@ -30,7 +29,7 @@ export class Store {
 
     if (options.persist) {
       try {
-        let stored = localstorify.getItem(GLOBALSTORAGE_PREFIX + namespace)
+        let stored = localStorage.getItem(GLOBALSTORAGE_PREFIX + namespace)
         if (stored !== null) {
           this.state = JSON.parse(stored)
         }
@@ -59,7 +58,11 @@ export class Store {
   setState = (value, options = { broadcast: true }) => {
     this.state = value
     if (this.options.persist) {
-      localstorify.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
+      try {
+        localStorage.setItem(GLOBALSTORAGE_PREFIX + this.namespace, JSON.stringify(value))
+      } catch(err) {
+        console.warn(`[use-store-hook]: failed to persist`, { value, err })
+      }
     }
     this.setters.forEach(setter => setter(this.state))
     if (options.broadcast && this.options.broadcast) {
@@ -79,7 +82,7 @@ export class GlobalStore {
   }
 
   clear = (namespace) => {
-    localstorify.removeItem(GLOBALSTORAGE_PREFIX + namespace)
+    localStorage.removeItem(GLOBALSTORAGE_PREFIX + namespace)
   }
 
   persist = (...args) => this.set(...args, { persist: true })
