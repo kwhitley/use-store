@@ -1,6 +1,6 @@
 {
-  "name": "use-store-hook",
-  "version": "1.7.0",
+  "name": "use-store",
+  "version": "1.7.1",
   "description": "Shared, persistable React.js useState() hook effect, no context required",
   "keywords": [
     "react",
@@ -44,15 +44,12 @@
     "@babel/preset-react": "^7.0.0",
     "@testing-library/react-hooks": "^2.0.1",
     "jest": "^24.9.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.10.1",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "react-test-renderer": "^16.10.1",
     "yarn-release": "^1.10.2"
   },
   "peerDependencies": {
-    "react": "^16.10.1"
-  },
-  "dependencies": {
-    "@testing-library/react": "^9.2.0"
+    "react": "^16.8.0"
   }
 }

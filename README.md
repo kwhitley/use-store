@@ -7,16 +7,11 @@ is still being solved with either context/provider hooks (messy), or traditional
 stores like redux/mobx (messier).  This store more or less mirrors the signature of
 the incredibly elegant `useState()` hook, with optional local persistence built-in.
 
-# Installation
-```
-yarn add use-store-hook
-```
-
 # API
 ### useStore(namespace, [initialValue=undefined], [options={}])
 returns `[ value, setValue ]` pair, identical to `useState()` in React
 ```js
-import { useStore } from 'use-store-hook'
+import { useStore } from 'use-store'
 
 // must be called inside a React component
 let [ value, setValue ] = useStore('foo')
@@ -34,7 +29,7 @@ setValue(3)
 ### globalStore.set(namespace, initialValue, options) // params identical to `useStore()` above
 For manually setting initial values and persist options so individual components don't have to (also to solve race conditions)
 ```js
-import { globalStore } from 'use-store-hook'
+import { globalStore } from 'use-store'
 
 globalStore.set('foo', 'bar', { persist: true })
 ```
@@ -44,7 +39,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentA.js
 
   import React from 'react'
-  import { useStore } from 'use-store-hook'
+  import { useStore } from 'use-store'
 
   export default function ComponentA() {
     let [ value, setValue ] = useStore('myValue', 3)
@@ -65,7 +60,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentB.js
 
   import React from 'react'
-  import { useStore } from 'use-store-hook'
+  import { useStore } from 'use-store'
   import ComponentA from './ComponentA'
 
   export default function ComponentB() {
@@ -84,7 +79,7 @@ globalStore.set('foo', 'bar', { persist: true })
 # Example (Event Handlers)
 ```js
   import React from 'react'
-  import { useStore } from 'use-store-hook'
+  import { useStore } from 'use-store'
 
   export default function ComponentA() {
     let [ value, setValue ] = useStore('myValue', 3)
