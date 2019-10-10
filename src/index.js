@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
 
+if (window && window.console) {
+  console.warn('Deprecation Notice: NPM package "use-store-hook" has been renamed to "use-store" (same version).  Please replace package.json references and switch to the new module name to remove this notice.')
+}
+
 // prefix for localStorage
 const GLOBALSTORAGE_PREFIX = '!ush::'
 

@@ -1,6 +1,18 @@
 Cross-component, persistable useState() effect, without context
 ===
 
+# NOTICE
+This library has been renamed to the more succinct [use-store](https://www.npmjs.com/package/use-store)... deprecation notices will be added to use-store-hook to facilitate the switchover.  Thanks [@dy](https://github.com/dy) for the suggestion!
+```
+npm install use-store
+```
+
+```
+import { useStore } from 'use-store'
+// or
+import useStore from 'use-store'
+```
+
 # Why?
 Even with the advent of React hooks, cross-component shared state
 is still being solved with either context/provider hooks (messy), or traditional
