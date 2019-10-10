@@ -11,7 +11,8 @@ the incredibly elegant `useState()` hook, with optional local persistence built-
 ### useStore(namespace, [initialValue=undefined], [options={}])
 returns `[ value, setValue ]` pair, identical to `useState()` in React
 ```js
-import { useStore } from 'use-store'
+import useStore from 'use-store'
+// note: import { useStore } from 'use-store' will continue to work
 
 // must be called inside a React component
 let [ value, setValue ] = useStore('foo')
@@ -39,7 +40,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentA.js
 
   import React from 'react'
-  import { useStore } from 'use-store'
+  import useStore from 'use-store'
 
   export default function ComponentA() {
     let [ value, setValue ] = useStore('myValue', 3)
@@ -60,7 +61,7 @@ globalStore.set('foo', 'bar', { persist: true })
   // ComponentB.js
 
   import React from 'react'
-  import { useStore } from 'use-store'
+  import useStore from 'use-store'
   import ComponentA from './ComponentA'
 
   export default function ComponentB() {
@@ -79,7 +80,7 @@ globalStore.set('foo', 'bar', { persist: true })
 # Example (Event Handlers)
 ```js
   import React from 'react'
-  import { useStore } from 'use-store'
+  import useStore from 'use-store'
 
   export default function ComponentA() {
     let [ value, setValue ] = useStore('myValue', 3)

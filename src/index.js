@@ -123,3 +123,5 @@ export function useStore(namespace, value, options = {}) {
 
   return [ state, magicSetter(whichStore.setState) ]
 }
+
+export default useStore

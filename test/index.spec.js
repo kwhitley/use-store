@@ -3,7 +3,7 @@ import { render, fireEvent, wait } from '@testing-library/react'
 import { renderHook, cleanup, act, unmount } from '@testing-library/react-hooks'
 
 // test files
-import { Store, globalStore, useStore } from '../src/index.js'
+import useStoreDefaultExport, { Store, globalStore, useStore } from '../src/index.js'
 
 const VALUE = 0
 const SETTER = 1
@@ -43,6 +43,10 @@ describe('@kwhitley/use-store', () => {
   describe('useStore(namespace:string, initialValue:anything, options:object) : function', () => {
     test('exports via { useStore } named export', () => {
       expect(typeof useStore).toBe('function')
+    })
+
+    test('exports useStore via default export', () => {
+      expect(useStore === useStoreDefaultExport).toBe(true)
     })
 
     test('initializes value to initialValue', () => {
@@ -127,7 +131,7 @@ describe('@kwhitley/use-store', () => {
           id: testStore.id,
           message: 'test2'
         }
-        
+
         act(() => {
           const [, setValue] = result.current;
           setValue('test2')
@@ -149,7 +153,7 @@ describe('@kwhitley/use-store', () => {
         testStore.channel.listeners['message'].forEach(listener => {
           expect(listener).toHaveBeenCalledWith(expect.objectContaining(expectedEvent))
         })
-        
+
         unmount()
       })
     })
