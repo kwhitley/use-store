@@ -21,6 +21,11 @@ const uuid = () => {
   });
 }
 
+const getValue = e =>
+  typeof e === 'object' && (e.nativeEvent || e.constructor.name === 'SyntheticEvent') && e.target
+    ? e.target.value
+    : e
+
 // individual Store implementation for tracking values/setters
 export class Store {
   constructor({ value, namespace, options }) {
@@ -55,7 +60,8 @@ export class Store {
     this.setState(e.data.message, { broadcast: false })
   }, 300)
 
-  setState = (value, options = { broadcast: true }) => {
+  setState = (eventOrValue, options = { broadcast: true }) => {
+    const value = getValue(eventOrValue)
     this.state = value
     if (this.options.persist) {
       try {
@@ -115,13 +121,7 @@ export function useStore(namespace, value, options = {}) {
     whichStore.setters = whichStore.setters.filter(setter => setter !== set)
   }, [])
 
-  const magicSetter = (setter) => (e) => {
-    typeof e === 'object' && (e.nativeEvent || e.constructor.name === 'SyntheticEvent') && e.target
-    ? setter(e.target.value)
-    : setter(e)
-  }
-
-  return [ state, magicSetter(whichStore.setState) ]
+  return [ state, whichStore.setState ]
 }
 
 export default useStore
