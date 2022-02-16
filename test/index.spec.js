@@ -82,6 +82,16 @@ describe('@kwhitley/use-store', () => {
     })
 
     describe('magicSetter behavior (automatic derivation of Event/SyntheticEvents values)', () => {
+      test('setValue keeps same reference every render', () => {
+        const { result } = renderHook(() => useStore('reference-test', 1))
+
+        const firstInstance = result.current[SETTER]
+        act(() => result.current[SETTER]('touch'))
+        const secondInstance = result.current[SETTER]
+
+        expect(firstInstance).toBe(secondInstance)
+      })
+
       test('setValue can be used directly with onChange (without event.target.value)', () => {
         const { result } = renderHook(() => useStore('test-input', 1))
 
